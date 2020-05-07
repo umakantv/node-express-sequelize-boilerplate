@@ -1,4 +1,4 @@
-# Node, express, Postgre boiler-plate
+# Node, express, Postgres-Sequelize boiler-plate
 
 # Dependencies
 * "dotenv": "^8.2.0"
