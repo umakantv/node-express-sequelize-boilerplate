@@ -1,31 +1,22 @@
-const models = require('../database/models');
+'use strict';
 
-const addBook = async (req, res) => {
-  try {
-    const book = await models.Book.create(req.body);
-    return res.status(200).json({
-      book,
-    });
-  } catch (error) {
-    return res.status(500).json({error: error.message});
-  }
-}
-const getBook = async (req, res) => {
-  try {
-    console.log(req.params.id);
-    const book = await models.Book.findOne({bookId: req.params.id});
-    if(book) {
-      return res.status(200).json({
-        book,
-      });
-    } else {
-      return res.status(400).json({error: "Could not find a book with the provided ID."});
-    }
-  } catch (error) {
-    return res.status(500).json({error: error.message});
-  }
-}
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
+const controllers = {};
 
-module.exports = {
-  addBook, getBook,
-}
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const controller = require(`./${file}`);
+    controllers[controller.name] = controller;
+  });
+
+// Export an object of all controllers
+// Required cotroller can be accessed from routes using :
+// const {Book} = require(../controllers)
+
+module.exports = controllers;

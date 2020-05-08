@@ -1,9 +1,8 @@
 const { Router } = require('express');
 const router = Router();
+const {Author} = require('../controllers');
 
-router.get('/:name', (req, res) => {
-  var name = req.params.name;
-  res.send(`Welcome to ${name}'s page`);
-})
+router.get('/:id', Author.getAuthor);
+router.post('/', Author.addAuthor);
 
 module.exports = router;
