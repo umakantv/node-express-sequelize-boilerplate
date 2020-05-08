@@ -9,29 +9,29 @@
 * "sequelize-cli": "^5.5.1"
 
 # Pre-run tasks
-[Tutorial](https://dev.to/nedsoft/getting-started-with-sequelize-and-postgres-emp)
-1. `npm i`
-2. Delete `database` folder and run `sequelize init` to initialize `.sequelize` file.
-3. Modify the `database/config/config.js` file like so:
-  ```javascript
-  "development": {
-    "url": process.env.DEV_DB_URL,
-    "dialect": "postgres"
-  }
-  ```
-  > Note: Modify other envs as well.
-4. Modify `models/index.js` file like so.
+[Tutorial](https://dev.to/nedsoft/performing-crud-with-sequelize-29cf)
+1. Clone from master branch and follow its steps to start from here.
 ```javascript
-let sequelize;
-if (config.url) {
-  sequelize = new Sequelize(config.url);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+// Associations are defined as
+// Author
+//   \
+//    \
+//   Book
+
+Author.hasMany(models.Book, {
+  foreignKey: 'authorId',
+  as: 'books',
+  onDelete: 'CASCADE'
+});
+
+Book.belongsTo(models.Author, {
+  foreignKey: 'authorId',
+  as: 'authors'
+});
+  
 ```
-5. Create `models` and `migrations` using command:  
-    `sequelize model:generate --name <model_name> --attributes <attributes>`  
-    E.g.: `sequelize model:generate --name User --attributes name:string,email:string`
-6. Modify the respective model files. Add their associations.
-7. Edit/Create the .env file
-8. Run the command: `sequelize db:migrate` to create tables in the database.
+
+> Note: For belongsTo type associations, foreignKey is an attribute of self table  
+> But for hasMany type associations, foreignKey is attribute of child table
+
+2. Create controllers and add them to routes.

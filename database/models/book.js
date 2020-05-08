@@ -1,20 +1,21 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
-    bookId: {
-      type: DataTypes.INTEGER,
-      allowNull: false 
-    },
     title: {
       type: DataTypes.STRING,
+      allowNull: false 
+    },
+    authorId: {
+      type: DataTypes.INTEGER,
       allowNull: false 
     }
   }, {});
   Book.associate = function(models) {
     // associations can be defined here
-    Book.hasMany(models.Author, {
+    // For simplicity, let's assume a book has only one author
+    Book.belongsTo(models.Author, {
       foreignKey: 'authorId',
-      onDelete: 'CASCADE'
+      as: 'authors'
     });
   };
   return Book;

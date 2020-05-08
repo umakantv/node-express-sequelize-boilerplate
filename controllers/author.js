@@ -1,4 +1,6 @@
-const {Author} = require('../database/models');
+const models = require('../database/models');
+
+const {Author} = models;
 
 const addAuthor = async (req, res) => {
   try {
@@ -13,9 +15,14 @@ const addAuthor = async (req, res) => {
 const getAuthor = async (req, res) => {
   try {
     const author = await Author.findOne({
-      attributes: ['authorId', 'name'],
+      include: [
+        {
+          model: models.Book,
+          as: 'books'
+        }
+      ],
       where: {
-        authorId: req.params.id
+        id: req.params.id
       }
       
     });

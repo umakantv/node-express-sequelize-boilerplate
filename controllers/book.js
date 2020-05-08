@@ -14,7 +14,7 @@ const getBook = async (req, res) => {
   try {
     console.log(req.params.id);
     const book = await Book.findOne({
-      attributes: ['bookId', 'title'],
+      attributes: ['', 'title'],
       where: {
         bookId: req.params.id
       }
@@ -31,9 +31,26 @@ const getBook = async (req, res) => {
     return res.status(500).json({error: error.message});
   }
 }
+const updateBook = async (req, res) => {
+  try {
+    const { bookId } = req.params;
+    const [ updated ] = await Book.update(req.body, {
+      where: { bookId: bookId }
+    });
+    if (updated) {
+      const updatedBook = await Book.findOne({ where: { bookId: bookId } });
+      return res.status(200).json({ book: updatedBook });
+    }
+    throw new Error('Book not found');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 const controller = {
   'name': 'Book',
   'addBook': addBook,
   'getBook': getBook,
+  'updateBook': updateBook
 }
 module.exports = controller;
