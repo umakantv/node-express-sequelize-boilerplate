@@ -11,7 +11,7 @@
 # Pre-run tasks
 [Tutorial](https://dev.to/nedsoft/getting-started-with-sequelize-and-postgres-emp)
 1. `npm i`
-2. Delete `database` folder and run `sequelize init` to initialize.
+2. Delete `database` folder and run `sequelize init` to initialize `.sequelize` file.
 3. Modify the `database/config/config.js` file like so:
   ```javascript
   "development": {
@@ -33,5 +33,5 @@ if (config.url) {
     `sequelize model:generate --name <model_name> --attributes <attributes>`  
     E.g.: `sequelize model:generate --name User --attributes name:string,email:string`
 6. Modify the respective model files. Add their associations.
-7. Run the command: `sequelize db:migrate` to create tables in the database.
-8. Edit/Create the .env file
+7. Edit/Create the .env file
+8. Run the command: `sequelize db:migrate` to create tables in the database.
