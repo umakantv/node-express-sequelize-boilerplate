@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     // For simplicity, let's assume a book has only one author
     Book.belongsTo(models.Author, {
       foreignKey: 'authorId',
-      as: 'authors'
+      as: 'author'
     });
   };
   return Book;

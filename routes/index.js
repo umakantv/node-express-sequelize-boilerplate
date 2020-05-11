@@ -6,5 +6,8 @@ const router = Router();
 
 router.use('/book', books);
 router.use('/author', authors);
+router.use('/test', (req, res) => {
+  res.send("Hello World");
+});
 
 module.exports = router;
