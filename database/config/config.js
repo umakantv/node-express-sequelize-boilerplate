@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+const user =      process.env.RDS_USERNAME;
+const pass =      process.env.RDS_PASSWORD;
+const database =  process.env.RDS_DB_NAME;
+const host =      process.env.RDS_HOSTNAME
+const port =      process.env.RDS_PORT;
+
 module.exports = {
   "development": {
     "url": process.env.DEV_DB_URL,
@@ -10,7 +16,7 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "url": process.env.DB_URL,
+    "url": `postgres://${user}:${pass}@${host}:${port}/${database}`,
     "dialect": "postgres"
   }
 };
