@@ -1,11 +1,11 @@
-const books = require('./book');
-const authors = require('./author');
+const book = require('./book');
+const author = require('./author');
 
 const { Router } = require('express');
 const router = Router();
 
-router.use('/book', books);
-router.use('/author', authors);
+router.use('/book', book);
+router.use('/author', author);
 router.use('/test', (req, res) => {
   res.send("Hello World");
 });

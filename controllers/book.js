@@ -45,7 +45,7 @@ const getBook = async (req, res) => {
 
 const searchBooks = async (req, res) => {
   try {
-    const book = await Book.findAll({
+    const books = await Book.findAll({
       attributes: ["title", "id"],
       include: [{
         model: Author, 
@@ -58,12 +58,12 @@ const searchBooks = async (req, res) => {
         }
       }
     });
-    if(book) {
+    if(books) {
       return res.status(200).json({
-        book,
+        books,
       });
     } else {
-      return res.status(400).json({error: "Could not find a book with the provided ID."});
+      return res.status(400).json({error: "No books with that query."});
     }
   } catch (error) {
     return res.status(500).json({error: error.message});
@@ -77,8 +77,7 @@ const updateBook = async (req, res) => {
       where: { id: bookId }
     });
     if (updated) {
-      const updatedBook = await Book.findOne({ where: { bookId: bookId } });
-      return res.status(200).json({ book: updatedBook });
+      getBook(req, res);
     }
     throw new Error('Book not found');
   } catch (error) {
@@ -88,9 +87,9 @@ const updateBook = async (req, res) => {
 
 const controller = {
   'name': 'Book',
-  'addBook': addBook,
-  'getBook': getBook,
-  'searchBooks': searchBooks,
-  'updateBook': updateBook
+  addBook,
+  getBook,
+  searchBooks,
+  updateBook
 }
 module.exports = controller;
